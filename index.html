@@ -3,327 +3,450 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cek IQ Anda</title>
+    <title>CEK IQ - TEST INTELEGENSI</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: #000;
             color: #fff;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            padding: 10px;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 100%;
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        .header {
             text-align: center;
-            margin-top: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #fff;
         }
         
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            color: #ffd166;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
         }
         
         .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: #b0b0b0;
+            font-size: 12px;
+            color: #888;
+            letter-spacing: 1px;
         }
         
         .input-section {
-            background-color: rgba(255, 255, 255, 0.08);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
+            background: #111;
+            border: 1px solid #333;
+            padding: 20px;
+            margin-bottom: 25px;
         }
         
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        
-        label {
+        .input-label {
             display: block;
+            font-size: 14px;
             margin-bottom: 8px;
-            font-size: 1.1rem;
-            color: #ffd166;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         input {
             width: 100%;
-            padding: 12px 15px;
-            border: none;
-            border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            background: #000;
+            border: 1px solid #444;
             color: #fff;
-            font-size: 1rem;
-            border: 2px solid rgba(255, 209, 102, 0.2);
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 20px;
         }
         
         input:focus {
             outline: none;
-            border-color: #ffd166;
+            border-color: #fff;
         }
         
-        button {
-            background: linear-gradient(90deg, #ff9a3c 0%, #ffd166 100%);
-            color: #1a1a2e;
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #fff;
+            color: #000;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+            transition: all 0.2s;
             margin-top: 10px;
-            box-shadow: 0 5px 15px rgba(255, 154, 60, 0.4);
         }
         
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 154, 60, 0.6);
+        .btn:hover {
+            background: #ccc;
         }
         
         .result-section {
             display: none;
-            background-color: rgba(255, 255, 255, 0.08);
-            padding: 25px;
-            border-radius: 15px;
+            background: #111;
+            border: 1px solid #333;
+            padding: 20px;
             margin-top: 20px;
         }
         
-        .result-section.show {
+        .result-section.active {
             display: block;
-            animation: fadeIn 0.8s ease;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .result-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .user-name {
+            font-weight: 700;
+            font-size: 18px;
+            color: #fff;
+        }
+        
+        .iq-display {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px 0;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
         }
         
         .iq-score {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #ff9a3c;
-            margin: 20px 0;
-            text-shadow: 0 0 10px rgba(255, 154, 60, 0.5);
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 3px;
         }
         
         .iq-category {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            min-height: 60px;
-            padding: 10px;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+            color: #888;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
-        .recommendation {
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .message-box {
+            background: #000;
+            border: 1px solid #333;
+            padding: 15px;
+            margin: 20px 0;
+            min-height: 100px;
         }
         
-        .recommendation button {
-            background: linear-gradient(90deg, #06d6a0 0%, #118ab2 100%);
-            box-shadow: 0 5px 15px rgba(6, 214, 160, 0.4);
+        .message-text {
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: center;
         }
         
-        .recommendation button:hover {
-            box-shadow: 0 8px 20px rgba(6, 214, 160, 0.6);
+        .recommend-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            color: #fff;
+            border: 1px solid #fff;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+        
+        .recommend-btn:hover {
+            background: #fff;
+            color: #000;
         }
         
         .footer {
             margin-top: 30px;
-            font-size: 0.9rem;
-            color: #888;
+            padding-top: 15px;
+            border-top: 1px solid #333;
             text-align: center;
+            font-size: 10px;
+            color: #555;
+            line-height: 1.4;
         }
         
-        .highlight {
-            color: #ffd166;
-            font-weight: bold;
+        .notice {
+            font-size: 11px;
+            color: #777;
+            text-align: center;
+            margin-top: 10px;
+            padding: 10px;
+            border-top: 1px solid #222;
         }
         
-        /* Responsiveness */
-        @media (max-width: 600px) {
+        /* Efek khusus untuk hasil rendah */
+        .low-iq .message-box {
+            border-color: #ff0000;
+            animation: pulse 2s infinite;
+        }
+        
+        .low-iq .iq-score {
+            color: #ff0000;
+        }
+        
+        @keyframes pulse {
+            0% { border-color: #ff0000; }
+            50% { border-color: #990000; }
+            100% { border-color: #ff0000; }
+        }
+        
+        /* Responsif untuk portrait */
+        @media (min-width: 768px) {
             .container {
-                padding: 20px;
+                max-width: 500px;
+                padding: 30px 20px;
             }
             
             h1 {
-                font-size: 2.2rem;
+                font-size: 28px;
             }
             
             .iq-score {
-                font-size: 3rem;
-            }
-            
-            .iq-category {
-                font-size: 1.4rem;
+                font-size: 60px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Berapa IQ Mu?</h1>
-        <p class="subtitle">Cek IQ Anda dengan teknologi tercanggih abad ini!</p>
+        <div class="header">
+            <h1>BERAPA IQ MU?</h1>
+            <div class="subtitle">TEST INTELEGENSI STANDAR INTERNASIONAL</div>
+        </div>
         
         <div class="input-section">
-            <div class="input-group">
-                <label for="name">Masukkan Nama Anda:</label>
-                <input type="text" id="name" placeholder="Nama Lengkap Anda">
-            </div>
-            
-            <button id="checkButton">CEK SEKARANG!</button>
+            <div class="input-label">MASUKKAN NAMA ANDA</div>
+            <input type="text" id="nameInput" placeholder="NAMA LENGKAP">
+            <button class="btn" id="checkBtn">CEK SEKARANG</button>
         </div>
         
         <div class="result-section" id="resultSection">
-            <h2>Hasil Tes IQ untuk <span id="userName" class="highlight">[Nama]</span></h2>
-            
-            <div class="iq-score" id="iqScore">0</div>
-            
-            <div class="iq-category" id="iqCategory">
-                Kategori IQ akan muncul di sini
+            <div class="result-header">
+                HASIL TEST IQ UNTUK: <span class="user-name" id="userName">[NAMA]</span>
             </div>
             
-            <div class="recommendation" id="recommendation">
-                <!-- Tombol rekomendasi akan muncul di sini berdasarkan hasil IQ -->
+            <div class="iq-display">
+                <div class="iq-score" id="iqScore">0</div>
+                <div class="iq-category">SKOR IQ</div>
+            </div>
+            
+            <div class="message-box">
+                <div class="message-text" id="iqMessage">PESAN KATEGORI AKAN MUNCUL DI SINI</div>
+            </div>
+            
+            <div id="recommendation"></div>
+            
+            <div class="notice">
+                *Hasil ini berdasarkan algoritma pengukuran IQ yang telah divalidasi
             </div>
         </div>
         
         <div class="footer">
-            <p>Hasil ini didasarkan pada algoritma canggih yang telah teruji secara ilmiah*</p>
-            <p><small>*mungkin tidak akurat, hanya untuk hiburan semata</small></p>
+            <div>© 2023 TEST IQ ONLINE</div>
+            <div>HASIL INI BERSIFAT RANDOM DAN UNTUK KEPERLUAN HIBURAN SAJA</div>
         </div>
     </div>
 
     <script>
-        // Data kategori IQ sesuai permintaan
-        const iqCategories = [
-            { min: 1, max: 10, message: "GOBLOK BENERR, GA KETOLONG", link: "nhentai.net", linkText: "Mending lu kesini aja dah" },
-            { min: 11, max: 25, message: "MONYET AJA LEBIH PINTER MONYET", link: "xnxx.com", linkText: "Mending lu kesini aja dah" },
-            { min: 26, max: 45, message: "GOBLOK STANDAR INI", link: "pornhub.com", linkText: "Mending lu kesini aja dah" },
-            { min: 46, max: 65, message: "SUMPAH LU MENDING GAK USAH HIDUP, DAH JELEK, BODOH, GOBLOK, PASTI BEBAN HIDUP ORANG TUANYA KAN INI, MASIH HIDUP SAMA MAMAK BAPAK, TOLOLLL", link: "xnxx.com", linkText: "Mending lu kesini aja dah" },
-            { min: 66, max: 80, message: "SETARA MONYETTT KOCAKKKKKKKKKKKK", link: "xnxx.com", linkText: "Mending lu kesini aja dah" },
-            { min: 81, max: 100, message: "BISALAH", link: "https://www.wikipedia.org", linkText: "Belajar lebih lanjut" },
-            { min: 101, max: 120, message: "MAYANNN, RATA2 DUNIA GLOBAL, TERUSKAN MEN", link: "https://www.wikipedia.org", linkText: "Belajar lebih lanjut" },
-            { min: 121, max: 140, message: "GG, LEBIH PINTAR DARIPADA KEBANYAKAN ORANG INDOH", link: "https://www.khanacademy.org", linkText: "Tingkatkan skill Anda" },
-            { min: 141, max: 160, message: "U MENDING GANTIIN BAHLIL LAH, BAHLIL GAK BECUS", link: "https://www.khanacademy.org", linkText: "Tingkatkan skill Anda" },
-            { min: 161, max: 200, message: "ANJAYYYYYYYYYYYYYY, HORMAT PAK GURUU", link: "https://www.khanacademy.org", linkText: "Tingkatkan skill Anda" },
-            { min: 201, max: 300, message: "IQ ORANG JENIUSS JIRRRRRRRRRRRRR", link: "https://www.khanacademy.org", linkText: "Tingkatkan skill Anda" }
+        // Konfigurasi: Tingkat kemungkinan hasil rendah (1-80)
+        const LOW_IQ_CHANCE = 0.65; // 65% kemungkinan dapat IQ rendah
+        
+        // Data kategori
+        const categories = [
+            { min: 1, max: 10, 
+              msg: "GOBLOK BENERR, GA KETOLONG", 
+              link: "nhentai.net",
+              btn: "MENDING LU KESINI AJA DAH" },
+            
+            { min: 11, max: 25, 
+              msg: "MONYET AJA LEBIH PINTER MONYET", 
+              link: "nhentai.net",
+              btn: "MENDING LU KESINI AJA DAH" },
+            
+            { min: 26, max: 45, 
+              msg: "GOBLOK STANDAR INI", 
+              link: "nhentai.net",
+              btn: "MENDING LU KESINI AJA DAH" },
+            
+            { min: 46, max: 65, 
+              msg: "SUMPAH LU MENDING GAK USAH HIDUP, DAH JELEK, BODOH, GOBLOK, PASTI BEBAN HIDUP ORANG TUANYA KAN INI, MASIH HIDUP SAMA MAMAK BAPAK, TOLOLLL", 
+              link: "xnxx.com",
+              btn: "MENDING LU KESINI AJA DAH" },
+            
+            { min: 66, max: 80, 
+              msg: "SETARA MONYETTT KOCAKKKKKKKKKKKK", 
+              link: "xnxx.com",
+              btn: "MENDING LU KESINI AJA DAH" },
+            
+            { min: 81, max: 100, 
+              msg: "BISALAH", 
+              link: "https://www.wikipedia.org",
+              btn: "BELAJAR LEBIH LANJUT" },
+            
+            { min: 101, max: 120, 
+              msg: "MAYANNN, RATA2 DUNIA GLOBAL, TERUSKAN MEN", 
+              link: "https://www.wikipedia.org",
+              btn: "BELAJAR LEBIH LANJUT" },
+            
+            { min: 121, max: 140, 
+              msg: "GG, LEBIH PINTAR DARIPADA KEBANYAKAN ORANG INDOH", 
+              link: "https://www.khanacademy.org",
+              btn: "TINGKATKAN SKILL ANDA" },
+            
+            { min: 141, max: 160, 
+              msg: "U MENDING GANTIIN BAHLIL LAH, BAHLIL GAK BECUS", 
+              link: "https://www.khanacademy.org",
+              btn: "TINGKATKAN SKILL ANDA" },
+            
+            { min: 161, max: 200, 
+              msg: "ANJAYYYYYYYYYYYYYY, HORMAT PAK GURUU", 
+              link: "https://www.khanacademy.org",
+              btn: "TINGKATKAN SKILL ANDA" },
+            
+            { min: 201, max: 300, 
+              msg: "IQ ORANG JENIUSS JIRRRRRRRRRRRRR", 
+              link: "https://www.khanacademy.org",
+              btn: "TINGKATKAN SKILL ANDA" }
         ];
         
         // Elemen DOM
-        const checkButton = document.getElementById('checkButton');
+        const nameInput = document.getElementById('nameInput');
+        const checkBtn = document.getElementById('checkBtn');
         const resultSection = document.getElementById('resultSection');
-        const userNameElement = document.getElementById('userName');
-        const iqScoreElement = document.getElementById('iqScore');
-        const iqCategoryElement = document.getElementById('iqCategory');
-        const recommendationElement = document.getElementById('recommendation');
-        const nameInput = document.getElementById('name');
+        const userName = document.getElementById('userName');
+        const iqScore = document.getElementById('iqScore');
+        const iqMessage = document.getElementById('iqMessage');
+        const recommendation = document.getElementById('recommendation');
         
-        // Fungsi untuk menghasilkan angka acak dalam rentang tertentu
-        function getRandomIQ(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
+        // Fungsi random dengan bias ke rendah
+        function getRandomIQ() {
+            // Random dengan kemungkinan tinggi untuk hasil rendah
+            if (Math.random() < LOW_IQ_CHANCE) {
+                // IQ rendah (1-80)
+                return Math.floor(Math.random() * 80) + 1;
+            } else {
+                // IQ tinggi (81-300)
+                return Math.floor(Math.random() * 220) + 81;
+            }
         }
         
-        // Fungsi untuk mendapatkan kategori berdasarkan skor IQ
-        function getCategoryByIQ(iqScore) {
-            for (const category of iqCategories) {
-                if (iqScore >= category.min && iqScore <= category.max) {
-                    return category;
+        // Dapatkan kategori berdasarkan IQ
+        function getCategory(iq) {
+            for (let cat of categories) {
+                if (iq >= cat.min && iq <= cat.max) {
+                    return cat;
                 }
             }
-            return iqCategories[0]; // Fallback ke kategori pertama
+            return categories[0];
         }
         
-        // Fungsi untuk menampilkan hasil
+        // Format angka dengan animasi
+        function animateIQScore(finalScore) {
+            let current = 0;
+            const increment = Math.ceil(finalScore / 40);
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= finalScore) {
+                    current = finalScore;
+                    clearInterval(timer);
+                }
+                iqScore.textContent = current;
+            }, 30);
+        }
+        
+        // Tampilkan hasil
         function showResults() {
             const name = nameInput.value.trim();
             
-            // Validasi input nama
-            if (name === "") {
-                alert("Silakan masukkan nama Anda terlebih dahulu!");
+            if (!name) {
+                alert("MASUKKAN NAMA TERLEBIH DAHULU");
                 nameInput.focus();
                 return;
             }
             
-            // Generate IQ acak antara 1-300
-            const iqScore = getRandomIQ(1, 300);
+            // Generate IQ dengan bias
+            const iq = getRandomIQ();
+            const category = getCategory(iq);
             
-            // Dapatkan kategori berdasarkan skor IQ
-            const category = getCategoryByIQ(iqScore);
+            // Tampilkan nama
+            userName.textContent = name.toUpperCase();
             
-            // Tampilkan nama pengguna
-            userNameElement.textContent = name;
+            // Reset kelas
+            resultSection.classList.remove('low-iq');
             
-            // Animasi skor IQ (menghitung dari 0 ke skor akhir)
-            let currentScore = 0;
-            const increment = Math.ceil(iqScore / 50); // Membagi animasi menjadi 50 langkah
+            // Tambahkan kelas low-iq jika hasil rendah
+            if (iq <= 80) {
+                resultSection.classList.add('low-iq');
+            }
             
-            const scoreInterval = setInterval(() => {
-                currentScore += increment;
-                if (currentScore >= iqScore) {
-                    currentScore = iqScore;
-                    clearInterval(scoreInterval);
-                }
-                iqScoreElement.textContent = currentScore;
-            }, 30);
+            // Animasikan skor
+            animateIQScore(iq);
             
-            // Tampilkan kategori
-            iqCategoryElement.textContent = category.message;
+            // Tampilkan pesan
+            iqMessage.textContent = category.msg;
             
-            // Tambahkan tombol rekomendasi berdasarkan kategori
-            recommendationElement.innerHTML = `
-                <button id="recommendationButton">${category.linkText}</button>
+            // Buat tombol rekomendasi
+            recommendation.innerHTML = `
+                <button class="recommend-btn" onclick="window.open('${category.link}', '_blank')">
+                    ${category.btn}
+                </button>
             `;
             
-            // Tambahkan event listener untuk tombol rekomendasi
-            document.getElementById('recommendationButton').addEventListener('click', function() {
-                window.open(category.link, '_blank');
-            });
-            
             // Tampilkan hasil
-            resultSection.classList.add('show');
+            resultSection.classList.add('active');
             
             // Scroll ke hasil
-            resultSection.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
         }
         
-        // Event listener untuk tombol Cek
-        checkButton.addEventListener('click', showResults);
+        // Event listeners
+        checkBtn.addEventListener('click', showResults);
         
-        // Event listener untuk tombol Enter di input nama
-        nameInput.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
+        nameInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
                 showResults();
             }
         });
         
-        // Memberikan placeholder nama acak untuk inspirasi
-        const randomNames = ["Budi Santoso", "Siti Aisyah", "Joko Widodo", "Dian Sastro", "Agus Salim", "Rina Harun", "Fajar Hidayat", "Maya Indah"];
-        const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
-        nameInput.placeholder = `Contoh: ${randomName}`;
+        // Fokus ke input nama saat load
+        window.addEventListener('load', function() {
+            nameInput.focus();
+            
+            // Contoh nama untuk placeholder
+            const examples = ["BUDI SANTOSO", "SITI AISYAH", "JOKO WIDODO", "DIAN SASTRO"];
+            const randomExample = examples[Math.floor(Math.random() * examples.length)];
+            nameInput.placeholder = `CONTOH: ${randomExample}`;
+        });
     </script>
 </body>
 </html>
